@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <h1>Abbreviation Finder</h1>
+        <form action="find/" method="post">
+            <div>
+                {% csrf_token %}
+            Abbreviation: 
+            <input name="abbreviation">
+            <input type="submit" value="Submit">   
+            {{ response }}  
+            </div> 
+            <br><br>            
+        </form>
+        <div>   
+            <table border="1">
+            <tr>
+            <td><a href="update/{{ findAbbreviation.id }}">update</a></td>
+            <td>{{ findAbbreviation.id }}</td>
+            <td>{{ findAbbreviation.abbreviation }}</td>
+            <td>{{ findAbbreviation.definition }}</td>
+            <td>{{ findAbbreviation.information }}</td>
+            <td><a href="delete/{{ findAbbreviation.id }}">delete</a></td>
+            </tr>
+            </table>
+        </div>
+        <br><br>     
+    </div>
+    <div>
+        <button>
+            <a href="add/">Add Abbreviation</a>
+        </button>
+    </div>
+    <div>
+        <h1>All Abbreviation</h1>
+        <table border="1">
+        {% for x in myabbreviation %}
+        <tr>
+        <td><a href="update/{{ x.id }}">Update</a></td>
+        <td>{{ x.id }}</td>
+        <td>{{ x.abbreviation }}</td>
+        <td>{{ x.definition }}</td>
+        <td>{{ x.information }}</td>
+        <td><a href="delete/{{ x.id }}">delete</a></td>
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    
+
+    
+</body>
+</html>

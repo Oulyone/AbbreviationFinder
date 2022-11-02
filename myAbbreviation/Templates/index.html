@@ -12,26 +12,41 @@
         <form action="find/" method="post">
             <div>
                 {% csrf_token %}
-            Abbreviation: 
+            Abbreviation:
             <input name="abbreviation">
-            <input type="submit" value="Submit">   
-            {{ response }}  
-            </div> 
-            <br><br>            
+            <input type="submit" value="Search">
+            {{ response }}
+            </div>
+            <br><br>
         </form>
-        <div>   
+        <div>
             <table border="1">
             <tr>
-            <td><a href="update/{{ findAbbreviation.id }}">update</a></td>
+            {% if findAbbreviation.id == "id" %}
+            Enter abbreviation what you find
+            {% else %}
+            <td>Update</td>
+            <td>ID</td>
+            <td>Abbreviation</td>
+            <td>Definition</td>
+            <td>Information</td>
+            <td>delete</td>
+            {% endif %}
+            </tr>
+            <tr>
+            {% if findAbbreviation.id == "id" %}
+            {% else %}
+            <td><button><a href="update/{{ findAbbreviation.id }}">Update</a></button></td>
             <td>{{ findAbbreviation.id }}</td>
             <td>{{ findAbbreviation.abbreviation }}</td>
             <td>{{ findAbbreviation.definition }}</td>
             <td>{{ findAbbreviation.information }}</td>
-            <td><a href="delete/{{ findAbbreviation.id }}">delete</a></td>
+            <td><button onclick=myFunction({{ findAbbreviation.id }})>Delete</button></td>
+            {% endif %}
             </tr>
             </table>
         </div>
-        <br><br>     
+        <br><br>
     </div>
     <div>
         <button>
@@ -41,20 +56,34 @@
     <div>
         <h1>All Abbreviation</h1>
         <table border="1">
+        <tr>
+            <td>Update</td>
+            <td>ID</td>
+            <td>Abbreviation</td>
+            <td>Definition</td>
+            <td>Information</td>
+            <td>Delete</td>
+        </tr>
         {% for x in myabbreviation %}
         <tr>
-        <td><a href="update/{{ x.id }}">Update</a></td>
-        <td>{{ x.id }}</td>
-        <td>{{ x.abbreviation }}</td>
-        <td>{{ x.definition }}</td>
-        <td>{{ x.information }}</td>
-        <td><a href="delete/{{ x.id }}">delete</a></td>
+            <td><button><a href="update/{{ x.id }}">Update</a></button></td>
+            <td id='id_abbre'>{{ x.id }}</td>
+            <td>{{ x.abbreviation }}</td>
+            <td>{{ x.definition }}</td>
+            <td>{{ x.information }}</td>
+            <td><button onclick=myFunction({{ x.id }})>Delete</button></td>
         </tr>
         {% endfor %}
         </table>
     </div>
-    
 
-    
+    <script>
+        function myFunction(x) {
+            if (confirm("You want to delete?") == true) 
+            {
+                location.href = `delete/${x}`;
+            } 
+        }
+    </script>
 </body>
 </html>

@@ -26,28 +26,40 @@ def add(request):
   return HttpResponse(template.render({}, request))
 
 def addrecord(request):
+    global res
     x = request.POST['abbreviation']
     y = request.POST['definition']
     z = request.POST['information']
     abbre = Abbreviation(abbreviation=x, definition=y, information=z)
     abbre.save()
+    find(request,abbre)
+    res = 'Added'
     return HttpResponseRedirect(reverse('index'))
 
 def delete(request, id):
-    abbre = Abbreviation.objects.get(id=id)
+    global res, findAbbreviation
+    try:
+        abbre = Abbreviation.objects.get(id=id)
+    except:
+        return HttpResponseRedirect(reverse('index'))
     abbre.delete()
+    res = 'Deleted'
+    findAbbreviation = Abbreviation ('id', 'abbreviation', 'definition', 'information')
     return HttpResponseRedirect(reverse('index'))
-  
+
 def update(request, id):
-    abbre = Abbreviation.objects.get(id=id)
+    try:
+        abbre = Abbreviation.objects.get(id=id)
+    except:
+        return HttpResponseRedirect(reverse('index'))
     template = loader.get_template('update.html')
     context = {
         'myabbre': abbre,
     }
-    
     return HttpResponse(template.render(context, request))
-  
+
 def updaterecord(request, id):
+    global res
     abbreviation = request.POST['abbreviation']
     definition = request.POST['definition']
     information = request.POST['information']
@@ -57,6 +69,7 @@ def updaterecord(request, id):
     abbre.information = information
     abbre.save()
     find(request,abbre)
+    res = 'Updated'
     return HttpResponseRedirect(reverse('index'))
 
 def find(request,abbre=''):
@@ -70,6 +83,6 @@ def find(request,abbre=''):
     except:
         res = 'Not found!'
         return HttpResponseRedirect(reverse('index'))
-    res = ''    
-    findAbbreviation = findAbbreviation   
+    res = 'Found!'
+    findAbbreviation = findAbbreviation
     return HttpResponseRedirect(reverse('index'))

@@ -37,33 +37,32 @@
             <br><br>
         </form>
         <div>
-            <table border="1">
-            <tr class="header">
+            
             {% if findAbbreviation.id == "id" %}
             Enter abbreviation what you find
             {% else %}
-            <th style="width:3.5%">Update</th>
-            <th style="width:2%">ID</th>
-            <th style="width:5%">Abbreviation</th>
-            <th style="width:30%">Definition</th>
-            <th style="width:40%">Information</th>
-            <th style="width:15%">Project Category</th>
-            <th style="width:3.5%">delete</th>
-            {% endif %}
+            <table border="1">
+            <tr class="header">
+                <th style="width:3.5%">Update</th>
+                <th style="width:2%">ID</th>
+                <th style="width:5%">Abbreviation</th>
+                <th style="width:30%">Definition</th>
+                <th style="width:40%">Information</th>
+                <th style="width:15%">Project Category</th>
+                <th style="width:3.5%">delete</th>
             </tr>
             <tr>
-            {% if findAbbreviation.id == "id" %}
-            {% else %}
-            <td><button><a id="link_button" href="update/{{ findAbbreviation.id }}">Update</a></button></td>
-            <td>{{ findAbbreviation.id }}</td>
-            <td>{{ findAbbreviation.abbreviation }}</td>
-            <td>{{ findAbbreviation.definition }}</td>
-            <td>{{ findAbbreviation.information }}</td>
-            <td>{{ findAbbreviation.project_category }}</td>
-            <td><button onclick=myFunction({{ findAbbreviation.id }})>Delete</button></td>
-            {% endif %}
-            </tr>
+                <td><button><a id="link_button" href="update/{{ findAbbreviation.id }}">Update</a></button></td>
+                <td>{{ findAbbreviation.id }}</td>
+                <td>{{ findAbbreviation.abbreviation }}</td>
+                <td>{{ findAbbreviation.definition }}</td>
+                <td>{{ findAbbreviation.information }}</td>
+                <td>{{ findAbbreviation.project_category }}</td>
+                <td><button onclick=myFunction({{ findAbbreviation.id }})>Delete</button></td>
+            <tr>
             </table>
+            {% endif %}
+    
         </div>
         <br><br>
     </div>

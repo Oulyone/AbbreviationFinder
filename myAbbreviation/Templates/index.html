@@ -5,6 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
+    <style>
+        th, td {
+            text-align: left;
+            padding: 8px;
+          }
+        tr:hover {
+            background-color: coral;
+        }
+        tr:nth-child(even) {background-color: #f2f2f2;}
+        #link_button {
+            text-decoration: none;
+            color: black;
+        }
+        table {
+            width: 10% 5% 15% 50% 20% 10%;
+          }
+    </style>
 </head>
 <body>
     <div>
@@ -21,26 +38,28 @@
         </form>
         <div>
             <table border="1">
-            <tr>
+            <tr class="header">
             {% if findAbbreviation.id == "id" %}
             Enter abbreviation what you find
             {% else %}
-            <td>Update</td>
-            <td>ID</td>
-            <td>Abbreviation</td>
-            <td>Definition</td>
-            <td>Information</td>
-            <td>delete</td>
+            <th style="width:3.5%">Update</th>
+            <th style="width:2%">ID</th>
+            <th style="width:5%">Abbreviation</th>
+            <th style="width:30%">Definition</th>
+            <th style="width:40%">Information</th>
+            <th style="width:15%">Project Category</th>
+            <th style="width:3.5%">delete</th>
             {% endif %}
             </tr>
             <tr>
             {% if findAbbreviation.id == "id" %}
             {% else %}
-            <td><button><a href="update/{{ findAbbreviation.id }}">Update</a></button></td>
+            <td><button><a id="link_button" href="update/{{ findAbbreviation.id }}">Update</a></button></td>
             <td>{{ findAbbreviation.id }}</td>
             <td>{{ findAbbreviation.abbreviation }}</td>
             <td>{{ findAbbreviation.definition }}</td>
             <td>{{ findAbbreviation.information }}</td>
+            <td>{{ findAbbreviation.project_category }}</td>
             <td><button onclick=myFunction({{ findAbbreviation.id }})>Delete</button></td>
             {% endif %}
             </tr>
@@ -50,27 +69,29 @@
     </div>
     <div>
         <button>
-            <a href="add/">Add Abbreviation</a>
+            <a id="link_button" href="add/">Add Abbreviation</a>
         </button>
     </div>
     <div>
         <h1>All Abbreviation</h1>
         <table border="1">
-        <tr>
-            <td>Update</td>
-            <td>ID</td>
-            <td>Abbreviation</td>
-            <td>Definition</td>
-            <td>Information</td>
-            <td>Delete</td>
+        <tr class="header">
+            <th style="width:3.5%">Update</th>
+            <th style="width:2%">ID</th>
+            <th style="width:5%">Abbreviation</th>
+            <th style="width:30%">Definition</th>
+            <th style="width:40%">Information</th>
+            <th style="width:15%">Project Category</th>
+            <th style="width:3.5%">delete</th>
         </tr>
         {% for x in myabbreviation %}
         <tr>
-            <td><button><a href="update/{{ x.id }}">Update</a></button></td>
+            <td><button><a id="link_button" href="update/{{ x.id }}">Update</a></button></td>
             <td id='id_abbre'>{{ x.id }}</td>
             <td>{{ x.abbreviation }}</td>
             <td>{{ x.definition }}</td>
             <td>{{ x.information }}</td>
+            <td>{{ x.project_category }}</td>
             <td><button onclick=myFunction({{ x.id }})>Delete</button></td>
         </tr>
         {% endfor %}

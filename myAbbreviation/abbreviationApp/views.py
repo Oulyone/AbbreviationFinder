@@ -8,11 +8,11 @@ from .models import Abbreviation
 global res, findAbbreviation
 
 res = ''
-findAbbreviation = Abbreviation ('id', 'abbreviation', 'definition', 'information')
+findAbbreviation = Abbreviation ('id', 'abbreviation', 'definition', 'information', 'project category')
 
 def index(request):
     global res, findAbbreviation
-    myAbbreviation = Abbreviation.objects.all().values()
+    myAbbreviation = Abbreviation.objects.all().order_by('-project_category', 'definition').values()
     template = loader.get_template('index.html')
     context = {
         'myabbreviation': myAbbreviation,
@@ -27,10 +27,11 @@ def add(request):
 
 def addrecord(request):
     global res
-    x = request.POST['abbreviation']
-    y = request.POST['definition']
-    z = request.POST['information']
-    abbre = Abbreviation(abbreviation=x, definition=y, information=z)
+    abbreviation = request.POST['abbreviation']
+    definition = request.POST['definition']
+    information = request.POST['information']
+    project = request.POST['project']
+    abbre = Abbreviation(abbreviation, definition, information, project)
     abbre.save()
     find(request,abbre)
     res = 'Added'
@@ -63,10 +64,12 @@ def updaterecord(request, id):
     abbreviation = request.POST['abbreviation']
     definition = request.POST['definition']
     information = request.POST['information']
+    project = request.POST['project']
     abbre = Abbreviation.objects.get(id=id)
     abbre.abbreviation = abbreviation
     abbre.definition = definition
     abbre.information = information
+    abbre.project_category = project
     abbre.save()
     find(request,abbre)
     res = 'Updated'
@@ -84,5 +87,4 @@ def find(request,abbre=''):
         res = 'Not found!'
         return HttpResponseRedirect(reverse('index'))
     res = 'Found!'
-    findAbbreviation = findAbbreviation
     return HttpResponseRedirect(reverse('index'))
